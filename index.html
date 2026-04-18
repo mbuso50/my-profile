@@ -1,107 +1,336 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Profile</title>
+    <title>Mbuso Mulaudzi | Professional Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
-</head>
+    
+    <style>
+        :root {
+            --primary: #38bdf8;
+            --secondary: #818cf8;
+            --dark: #020617;
+            --card: #0f172a;
+            --white: #ffffff;
+            --text-dim: #94a3b8;
+            --accent-glow: rgba(56, 189, 248, 0.3);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
 
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--dark);
+            color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- MESH GRADIENT BACKGROUND --- */
+        .bg-glow {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(56, 189, 248, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(129, 140, 248, 0.05) 0%, transparent 40%);
+            z-index: -1;
+        }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+        /* --- HEADER ENHANCEMENT --- */
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(2, 6, 23, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+
+        .logo { font-weight: 800; font-size: 1.5rem; color: var(--white); text-decoration: none; letter-spacing: -1px; }
+        .logo span { color: var(--primary); }
+
+        .nav-links { display: flex; list-style: none; gap: 40px; }
+        .nav-links a { color: var(--text-dim); text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: var(--transition); text-transform: uppercase; letter-spacing: 1px; }
+        .nav-links a:hover { color: var(--primary); text-shadow: 0 0 10px var(--primary); }
+
+        /* --- HERO SECTION --- */
+        .hero { 
+            height: 100vh; 
+            display: flex; 
+            align-items: center; 
+            position: relative;
+        }
+
+        .hero-content { 
+            display: grid;
+            grid-template-columns: 1.3fr 1fr;
+            gap: 60px;
+            align-items: center;
+            width: 100%;
+        }
+
+        .subtitle { 
+            color: var(--primary); 
+            font-weight: 800; 
+            letter-spacing: 4px; 
+            font-size: 0.75rem; 
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .subtitle::before { content: ''; width: 30px; height: 2px; background: var(--primary); display: inline-block; }
+
+        h1 { font-size: clamp(2.5rem, 6vw, 4.2rem); line-height: 1.1; margin-bottom: 24px; font-weight: 800; }
+        h1 span { 
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .description { color: var(--text-dim); font-size: 1.2rem; margin-bottom: 40px; max-width: 550px; }
+
+        /* --- WOW 3D CHARACTER EFFECT --- */
+        .hero-visual { position: relative; }
+        
+        .character-visual {
+            position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: float 5s ease-in-out infinite;
+        }
+
+        /* Using a stylized astronaut to represent 3D Character */
+        .character-main {
+            width: 300px;
+            height: 300px;
+            background: var(--card);
+            border-radius: 40% 60% 60% 40% / 60% 30% 70% 40%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 8rem;
+            color: var(--white);
+            border: 2px solid rgba(56, 189, 248, 0.2);
+            position: relative;
+            z-index: 2;
+            box-shadow: inset 0 0 40px var(--accent-glow);
+        }
+
+        .blob-bg {
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            background: var(--primary);
+            filter: blur(80px);
+            opacity: 0.2;
+            z-index: 1;
+            animation: morph 10s linear infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-25px) rotate(2deg); }
+        }
+
+        @keyframes morph {
+            0% { border-radius: 40% 60% 60% 40% / 60% 30% 70% 40%; }
+            50% { border-radius: 60% 40% 30% 70% / 40% 70% 30% 60%; }
+            100% { border-radius: 40% 60% 60% 40% / 60% 30% 70% 40%; }
+        }
+
+        /* --- BUTTONS --- */
+        .hero-btns { display: flex; gap: 20px; }
+        .btn { 
+            padding: 16px 32px; 
+            border-radius: 12px; 
+            text-decoration: none; 
+            font-weight: 700; 
+            transition: var(--transition); 
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn.primary { background: var(--primary); color: var(--dark); box-shadow: 0 10px 20px rgba(56, 189, 248, 0.2); }
+        .btn.secondary { border: 2px solid rgba(255,255,255,0.1); color: var(--white); background: rgba(255,255,255,0.03); }
+        
+        .btn:hover { transform: translateY(-5px); }
+        .btn.primary:hover { box-shadow: 0 15px 30px rgba(56, 189, 248, 0.4); }
+        .btn.secondary:hover { background: rgba(255,255,255,0.1); border-color: var(--primary); }
+
+        /* --- SKILLS SECTION --- */
+        .section { padding: 120px 0; }
+        .section-header { text-align: center; margin-bottom: 60px; }
+        .section-header h2 { font-size: 2.5rem; margin-bottom: 10px; }
+        
+        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+        
+        .skill-card { 
+            background: rgba(15, 23, 42, 0.6); 
+            padding: 40px; 
+            border-radius: 24px; 
+            border: 1px solid rgba(255,255,255,0.05); 
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, var(--primary), transparent);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: 0;
+        }
+
+        .skill-card:hover { border-color: var(--primary); transform: scale(1.02); }
+        .skill-card:hover::before { opacity: 0.05; }
+
+        .skill-card i { font-size: 3rem; color: var(--primary); margin-bottom: 25px; position: relative; }
+        .skill-card h3 { font-size: 1.5rem; margin-bottom: 15px; position: relative; }
+        .skill-card p { color: var(--text-dim); position: relative; }
+
+        /* --- ANIMATIONS --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: 1s all ease;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- MOBILE RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .hero-content { grid-template-columns: 1fr; text-align: center; }
+            .hero-text { order: 2; }
+            .hero-visual { order: 1; margin-bottom: 40px; }
+            .hero-btns { justify-content: center; flex-direction: column; }
+            .nav-links { display: none; }
+            h1 { font-size: 3rem; }
+            .description { margin: 0 auto 30px; }
+            .subtitle { justify-content: center; }
+            .subtitle::before { display: none; }
+        }
+    </style>
+</head>
 <body>
+
+    <div class="bg-glow"></div>
+
     <header>
         <div class="container">
             <nav>
-                <div class="logo">
-                    <img src="logo.png" alt="Logo">
-                </div>
+                <a href="#" class="logo">MBUSO<span>.DEV</span></a>
                 <ul class="nav-links">
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#about">About Me</a></li>
-                    <li><a href="#contact">Contact us</a></li>
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#skills">Tech Stack</a></li>
+                    <li><a href="#contact">Contact</a></li>
                 </ul>
-                <div class="burger">
-                    <div class="line1"></div>
-                    <div class="line2"></div>
-                    <div class="line3"></div>
-                </div>
             </nav>
         </div>
     </header>
 
-    <section id="home" class="hero">
-        <div class="video-background">
-            <video autoplay muted loop playsinline>
-                <source src="video.mp4" type="video/mp4">
-                <source src="your-video-file.webm" type="video/webm">
-                Your browser does not support the video tag.
-            </video>
-            <div class="video-overlay"></div>
-        </div>
-    </section>
-
-    <section id="about" class="about">
+    <section id="hero" class="hero">
         <div class="container">
-            <h2>About Me</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>I'm a self-taught developer who began my coding journey in 2020. My passion for technology led me
-                        to mobile development in 2022, where I learned Flutter through the MTN App Academy program. In
-                        2023, I expanded my skills into web development, and I recently earned my Vocational Certificate
-                        in Introduction to Computer Science in 2024.</p>
-                    <p>Currently, I'm focused on becoming a certified full-stack developer to pursue my dream career in
-                        software development. When I'm not coding, you can find me playing chess, watching sci-fi
-                        movies, or experimenting with new recipes in the kitchen.</p>
-                    <div class="social-icons">
-                        <a href="https://github.com/mbuso50"><i class="fab fa-github"></i></a>
-                        <a href="https://www.linkedin.com/in/mbuso-mulaudzi-654582284/"><i
-                                class="fab fa-linkedin"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
+            <div class="hero-content">
+                <div class="hero-text reveal">
+                    <p class="subtitle">NQF LEVEL 6 ICT SPECIALIST</p>
+                    <h1>Defining the Future of <span>Infrastructure</span></h1>
+                    <p class="description">Bridging high-performance network engineering with modern full-stack development. 2 years of proven excellence at Tshwane North TVET.</p>
+                    <div class="hero-btns">
+                        <a href="mailto:mbuso.mulaudzi50@gmail.com" class="btn primary">
+                            <i class="fas fa-paper-plane"></i> Let's Talk
+                        </a>
+                        <a href="#skills" class="btn secondary">
+                            View Ecosystem
+                        </a>
                     </div>
                 </div>
-                <div class="about-info">
-                    <div class="hero-image">
-                        <img src="mbuso.jpg" alt="Profile Image">
+                <div class="hero-visual reveal">
+                    <div class="character-visual">
+                        <div class="blob-bg"></div>
+                        <div class="character-main">
+                            <i class="fas fa-user-gear"></i>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="contact" class="contact">
+    <section id="skills" class="section">
         <div class="container">
-            <h2>Contact Me</h2>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <h3>Connect With Me</h3>
-                    <div class="social-icons">
-                        <a href="https://github.com/mbuso50"><i class="fab fa-github"></i></a>
-                        <a href="https://www.linkedin.com/in/mbuso-mulaudzi-654582284/"><i
-                                class="fab fa-linkedin"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
+            <div class="section-header reveal">
+                <h2>Technical Mastery</h2>
+                <p style="color: var(--text-dim)">A comprehensive overview of my digital and physical toolkit.</p>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-card reveal">
+                    <i class="fas fa-network-wired"></i>
+                    <h3>Infrastructure</h3>
+                    <p>High-density cabinet racking, structured cabling, and Microsoft 365 enterprise administration.</p>
                 </div>
-                <div class="map-container">
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.325091781129!2d-122.41941592426648!3d37.7749294719015!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80859a6d00690021%3A0x4a501367f076adff!2sSan%20Francisco%2C%20CA%2C%20USA!5e0!3m2!1sen!2s!4v1712077412496!5m2!1sen!2s"
-                        width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade">
-                    </iframe>
+                <div class="skill-card reveal">
+                    <i class="fas fa-microchip"></i>
+                    <h3>Systems Engineering</h3>
+                    <p>Advanced hardware diagnostics, component refurbishment, and performance optimization.</p>
+                </div>
+                <div class="skill-card reveal">
+                    <i class="fas fa-code-branch"></i>
+                    <h3>Software Architecture</h3>
+                    <p>Scalable mobile solutions with React Native and robust backend logic with Node.js & MySQL.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 Mbuso Mulaudzi. All rights reserved.</p>
-        </div>
-    </footer>
+    <script>
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
 
-    <script src="script.js"></script>
+        // Scroll Reveal Animation
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+
+        window.addEventListener("scroll", reveal);
+        // Trigger once on load
+        reveal();
+    </script>
 </body>
-
 </html>
